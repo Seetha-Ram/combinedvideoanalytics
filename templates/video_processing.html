@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Processing - {{ username }}</title>
+</head>
+<body>
+    <h1>Hello, {{ username }}!</h1>
+    
+    <p>Select Processing Option:</p>
+    <form action="/flask/video_processing" method="post">
+        <label for="processing_option">Processing Option:</label>
+        <select id="processing_option" name="processing_option">
+            <option value="Video Similarity">Video Similarity</option>
+            <option value="Pose Estimation">Pose Estimation</option>
+        </select>
+        
+        <br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if processing_option == "Video Similarity" %}
+        <h2>Video Similarity Content</h2>
+        <form action="/flask/process_video_similarity" method="post" enctype="multipart/form-data">
+            <label for="video1">Upload first video:</label>
+            <input type="file" name="video1" accept=".mp4">
+
+            <label for="video2">Upload second video:</label>
+            <input type="file" name="video2" accept=".mp4">
+
+            <button type="submit">Process Videos</button>
+        </form>
+    {% elif processing_option == "Pose Estimation" %}
+        <h2>Pose Estimation Content</h2>
+        <form action="/flask/process_pose_estimation" method="post" enctype="multipart/form-data">
+            <label for="pose_video">Upload a video for pose estimation:</label>
+            <input type="file" name="pose_video" accept=".mp4, .avi">
+
+            <button type="submit">Process Pose</button>
+        </form>
+    {% endif %}
+</body>
+</html>
